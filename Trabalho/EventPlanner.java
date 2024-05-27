@@ -15,12 +15,15 @@ public class EventPlanner extends JFrame {
     private List<Event> events;
 
     public EventPlanner() {
+        // Set window properties
         setTitle("Event Planner");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Load events from file
         events = loadEvents();
 
+        // Create table and buttons
         eventTableModel = new EventTableModel(events);
         eventTable = new JTable(eventTableModel);
 
@@ -30,6 +33,7 @@ public class EventPlanner extends JFrame {
         editButton = new JButton("Edit Event");
         deleteButton = new JButton("Delete Event");
 
+        // Add event button
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,10 +44,12 @@ public class EventPlanner extends JFrame {
                     events.add(event);
                     eventTableModel.fireTableDataChanged();
                     saveEvents();
-                }
+                } 
+
             }
         });
 
+        // Edit event button
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +70,7 @@ public class EventPlanner extends JFrame {
             }
         });
 
+        // Delete event button
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,6 +100,11 @@ public class EventPlanner extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Load events from file
+     * @return list of events
+     */
+    @SuppressWarnings("unchecked")
     private List<Event> loadEvents() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("events.dat"))) {
             return (List<Event>) ois.readObject();
@@ -101,6 +113,9 @@ public class EventPlanner extends JFrame {
         }
     }
 
+    /**
+     * Save events to file
+     */
     private void saveEvents() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("events.dat"))) {
             oos.writeObject(events);

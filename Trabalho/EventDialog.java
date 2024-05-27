@@ -54,7 +54,30 @@ public class EventDialog extends JDialog {
                 String time = timeField.getText();
                 String location = locationField.getText();
                 String description = descriptionArea.getText();
+                
+                // check if everything is filled
+                if (title.isEmpty() || date.isEmpty() || time.isEmpty()) {
+                    JOptionPane.showMessageDialog(EventDialog.this, "Please fill all fields", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // check if date is in the correct format
+                if (!date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                    JOptionPane.showMessageDialog(EventDialog.this, "Invalid date format. Use YYYY-MM-DD", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // check if time is in the correct format
+                if (!time.matches("\\d{2}:\\d{2}")) {
+                    JOptionPane.showMessageDialog(EventDialog.this, "Invalid time format. Use HH:MM", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
                 LocalDateTime dateTime = LocalDateTime.parse(date + "T" + time);
+                
 
                 if (EventDialog.this.event == null) {
                     EventDialog.this.event = new Event(title, dateTime, location, description);
