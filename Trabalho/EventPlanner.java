@@ -42,6 +42,7 @@ public class EventPlanner extends JFrame {
                 Event event = dialog.getEvent();
                 if (event != null) {
                     events.add(event);
+                    // refresh the events table
                     eventTableModel.fireTableDataChanged();
                     saveEvents();
                 } 

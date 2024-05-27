@@ -54,6 +54,7 @@ public class EventDialog extends JDialog {
                 String time = timeField.getText();
                 String location = locationField.getText();
                 String description = descriptionArea.getText();
+                LocalDateTime dateTime = null;
                 
                 // check if everything is filled
                 if (title.isEmpty() || date.isEmpty() || time.isEmpty()) {
@@ -75,8 +76,16 @@ public class EventDialog extends JDialog {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                
-                LocalDateTime dateTime = LocalDateTime.parse(date + "T" + time);
+
+                // check if date and time are valid
+                try {
+                    dateTime = LocalDateTime.parse(date + "T" + time);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(EventDialog.this, "Invalid date and time", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 
 
                 if (EventDialog.this.event == null) {
