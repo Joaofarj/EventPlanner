@@ -76,6 +76,13 @@ public class EventPlanner extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = eventTable.getSelectedRow();
                 if (selectedRow != -1) {
+                    // dialog to confirm deletion
+                    int option = JOptionPane.showConfirmDialog(EventPlanner.this, "Are you sure you want to delete this event?",
+                            "Delete Event", JOptionPane.YES_NO_OPTION);
+
+                    if (option != JOptionPane.YES_OPTION) {
+                        return;
+                    }
                     events.remove(selectedRow);
                     eventTableModel.fireTableDataChanged();
                     saveEvents();
