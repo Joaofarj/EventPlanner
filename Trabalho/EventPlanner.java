@@ -6,6 +6,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Main class for displaying the event planner
+  */
 public class EventPlanner extends JFrame {
     private JTable eventTable;
     private EventTableModel eventTableModel;
@@ -14,6 +18,11 @@ public class EventPlanner extends JFrame {
     private JButton deleteButton;
     private List<Event> events;
 
+
+
+    /**
+     * Event planner constructor 
+     */
     public EventPlanner() {
         // Set window properties
         setTitle("Event Planner");

@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 
+/* 
+ * class o show a Dialog to create or edit an event
+ */
 public class EventDialog extends JDialog {
     private JTextField titleField;
     private JTextField dateField;
@@ -12,6 +15,12 @@ public class EventDialog extends JDialog {
     private JTextArea descriptionArea;
     private Event event;
 
+
+    /**
+     * @param owner the owner of the dialog
+     * @param title the title of the dialog
+     * @param event the event to edit, or null to create a new event
+     */
     public EventDialog(Frame owner, String title, Event event) {
         super(owner, title, true);
         this.event = event;
@@ -55,7 +64,7 @@ public class EventDialog extends JDialog {
                 String location = locationField.getText();
                 String description = descriptionArea.getText();
                 LocalDateTime dateTime = null;
-                
+
                 // check if everything is filled
                 if (title.isEmpty() || date.isEmpty() || time.isEmpty()) {
                     JOptionPane.showMessageDialog(EventDialog.this, "Please fill all fields", "Error",
@@ -85,8 +94,6 @@ public class EventDialog extends JDialog {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                
 
                 if (EventDialog.this.event == null) {
                     EventDialog.this.event = new Event(title, dateTime, location, description);
@@ -119,6 +126,9 @@ public class EventDialog extends JDialog {
         pack();
     }
 
+    /**
+     * @return the event created or edited
+     */
     public Event getEvent() {
         return event;
     }
