@@ -6,22 +6,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Main class for displaying the event planner
-  */
+ */
 public class EventPlanner extends JFrame {
     private JTable eventTable;
     private EventTableModel eventTableModel;
     private JButton addButton;
     private JButton editButton;
     private JButton deleteButton;
+    private JButton toggleButton;
     private List<Event> events;
-
-
+    private boolean isCalendarVisible;
 
     /**
-     * Event planner constructor 
+     * Event planner constructor
      */
     public EventPlanner() {
         // Set window properties
@@ -36,11 +35,13 @@ public class EventPlanner extends JFrame {
         eventTableModel = new EventTableModel(events);
         eventTable = new JTable(eventTableModel);
 
+        MonthlyCalendarPanel calendarPanel = new MonthlyCalendarPanel();
         JScrollPane scrollPane = new JScrollPane(eventTable);
 
         addButton = new JButton("Add Event");
         editButton = new JButton("Edit Event");
         deleteButton = new JButton("Delete Event");
+        toggleButton = new JButton("Toggle modes");
 
         // Add event button
         addButton.addActionListener(new ActionListener() {
@@ -54,7 +55,7 @@ public class EventPlanner extends JFrame {
                     // refresh the events table
                     eventTableModel.fireTableDataChanged();
                     saveEvents();
-                } 
+                }
 
             }
         });
@@ -87,7 +88,8 @@ public class EventPlanner extends JFrame {
                 int selectedRow = eventTable.getSelectedRow();
                 if (selectedRow != -1) {
                     // dialog to confirm deletion
-                    int option = JOptionPane.showConfirmDialog(EventPlanner.this, "Are you sure you want to delete this event?",
+                    int option = JOptionPane.showConfirmDialog(EventPlanner.this,
+                            "Are you sure you want to delete this event?",
                             "Delete Event", JOptionPane.YES_NO_OPTION);
 
                     if (option != JOptionPane.YES_OPTION) {
@@ -102,12 +104,45 @@ public class EventPlanner extends JFrame {
             }
         });
 
+        // Main pannel that alternates between the calendar and the table
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        isCalendarVisible = true;
+
+        // toggle event button the switches between the calendar and the table
+        toggleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calendarPanel.setVisible(true);
+                if (isCalendarVisible) {
+                    mainPanel.remove(scrollPane);
+                    mainPanel.add(calendarPanel, BorderLayout.CENTER);
+                } else {
+                    mainPanel.remove(calendarPanel);
+                    mainPanel.add(scrollPane, BorderLayout.CENTER);
+                }
+
+                isCalendarVisible = !isCalendarVisible;
+
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+        });
+
+        
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(calendarPanel, BorderLayout.SOUTH);
+        calendarPanel.setVisible(false);
+
+        add(mainPanel, BorderLayout.CENTER);
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
         buttonPanel.add(editButton);
         buttonPanel.add(deleteButton);
+        buttonPanel.add(toggleButton);
 
-        add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Reminder Service
@@ -119,6 +154,7 @@ public class EventPlanner extends JFrame {
 
     /**
      * Load events from file
+     * 
      * @return list of events
      */
     @SuppressWarnings("unchecked")
@@ -145,4 +181,3 @@ public class EventPlanner extends JFrame {
         SwingUtilities.invokeLater(EventPlanner::new);
     }
 }
-
