@@ -6,7 +6,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * Panel that displays a monthly calendar with navigation buttons to move between months.
+ * Panel that displays a monthly calendar with navigation buttons to move
+ * between months.
  */
 public class MonthlyCalendarPanel extends JPanel {
     private JPanel calendarPanel;
@@ -46,7 +47,7 @@ public class MonthlyCalendarPanel extends JPanel {
         headerPanel.add(monthLabel);
         headerPanel.add(nextButton);
 
-        // main panel 
+        // main panel
         calendarPanel = new JPanel(new GridLayout(7, 7));
         add(headerPanel, BorderLayout.NORTH);
         add(calendarPanel, BorderLayout.CENTER);
@@ -54,15 +55,17 @@ public class MonthlyCalendarPanel extends JPanel {
         updateCalendar();
     }
 
-    /* 
+    /*
      * Updates calendar
      */
     private void updateCalendar() {
         calendarPanel.removeAll();
+        calendarPanel.setLayout(new GridLayout(7, 7));
 
-        String[] daysOfWeek = { "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb" };
+        String[] daysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
         for (String day : daysOfWeek) {
             calendarPanel.add(new JLabel(day, SwingConstants.CENTER));
+
         }
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -71,12 +74,18 @@ public class MonthlyCalendarPanel extends JPanel {
 
         // Fills the calendar with empty panels before the start of the month
         for (int i = 1; i < firstDayOfWeek; i++) {
-            calendarPanel.add(new JPanel()); 
+            calendarPanel.add(new JPanel());
         }
         for (int day = 1; day <= daysInMonth; day++) {
             // Adds a panel for each day of the month
             DayPanel dayPanel = new DayPanel(day);
             calendarPanel.add(dayPanel);
+        }
+
+        // Fills the calendar with empty panels after the end of the month
+
+        for (int i = 1; i < 42 - daysInMonth - firstDayOfWeek; i++) {
+            calendarPanel.add(new JPanel());
         }
 
         monthLabel.setText(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " "
