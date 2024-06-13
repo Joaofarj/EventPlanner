@@ -37,6 +37,7 @@ public class DayPanel extends JPanel {
         eventArea = new JTextArea();
         eventArea.setLineWrap(true);
         eventArea.setWrapStyleWord(true);
+        eventArea.setEditable(false);
         add(new JScrollPane(eventArea), BorderLayout.CENTER);
     }
 }
