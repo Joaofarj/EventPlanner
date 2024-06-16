@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Calendar;
 import java.util.List;
 
 public class CalendarView extends JPanel {

@@ -5,6 +5,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * EventListView class represents a panel that displays a list of events for a
+ * selected date.
+ * It provides functionality to add, edit, and delete events.
+ */
 public class EventListView extends JPanel {
     private EventManager eventManager;
     private JPanel eventListPanel;
@@ -13,6 +18,14 @@ public class EventListView extends JPanel {
     private EventActionListener deleteListener;
     private LocalDate date;
 
+    /**
+     * Constructs an EventListView with the specified parameters.
+     *
+     * @param eventManager   the EventManager that manages events
+     * @param editListener   the listener for edit actions
+     * @param deleteListener the listener for delete actions
+     * @param date           the date for which events are displayed
+     */
     public EventListView(EventManager eventManager, EventActionListener editListener,
             EventActionListener deleteListener, LocalDate date) {
         this.eventManager = eventManager;
@@ -22,18 +35,24 @@ public class EventListView extends JPanel {
         initializeUI();
     }
 
+    /**
+     * Initializes the user interface components.
+     */
     private void initializeUI() {
         setLayout(new BorderLayout());
         eventListPanel = new JPanel();
         eventListPanel.setLayout(new BoxLayout(eventListPanel, BoxLayout.Y_AXIS));
 
-        // top panel with date and a button to add events
+        // Top panel with date and a button to add events
         topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
 
         add(new JScrollPane(eventListPanel), BorderLayout.CENTER);
     }
-    
+
+    /**
+     * Adds a new event by showing the EventDialog.
+     */
     private void addEvent() {
         EventDialog dialog = new EventDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Add Event", date);
         dialog.setVisible(true);
@@ -45,8 +64,12 @@ public class EventListView extends JPanel {
         }
     }
 
+    /**
+     * Updates the list of events for the specified date.
+     *
+     * @param date the date for which to display events
+     */
     public void updateEvents(LocalDate date) {
-
         this.date = date;
 
         eventListPanel.removeAll();
@@ -65,7 +88,6 @@ public class EventListView extends JPanel {
         topPanel.add(addEventsButton, BorderLayout.EAST);
 
         add(topPanel, BorderLayout.NORTH);
-
 
         List<Event> events = eventManager.getEventsByDate(date);
 
@@ -107,7 +129,17 @@ public class EventListView extends JPanel {
         repaint();
     }
 
+    /**
+     * The EventActionListener interface should be implemented by any class that
+     * handles
+     * actions performed on events, such as editing or deleting an event.
+     */
     public interface EventActionListener {
+        /**
+         * Invoked when an action is performed on an event.
+         *
+         * @param event the event on which the action is performed
+         */
         void actionPerformed(Event event);
     }
 }

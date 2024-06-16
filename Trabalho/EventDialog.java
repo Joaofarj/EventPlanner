@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/* 
- * class o show a Dialog to create or edit an event
+/**
+ * EventDialog class displays a dialog to create or edit an event.
  */
 public class EventDialog extends JDialog {
     private JTextField titleField;
@@ -19,6 +19,8 @@ public class EventDialog extends JDialog {
     private Event event;
 
     /**
+     * Constructs an EventDialog for creating a new event.
+     *
      * @param owner the owner of the dialog
      * @param title the title of the dialog
      */
@@ -28,6 +30,8 @@ public class EventDialog extends JDialog {
     }
 
     /**
+     * Constructs an EventDialog for editing an existing event.
+     *
      * @param owner the owner of the dialog
      * @param title the title of the dialog
      * @param event the event to edit, or null to create a new event
@@ -40,9 +44,11 @@ public class EventDialog extends JDialog {
     }
 
     /**
+     * Constructs an EventDialog for creating a new event with a pre-filled date.
+     *
      * @param owner the owner of the dialog
      * @param title the title of the dialog
-     * @param event the event to edit, or null to create a new event
+     * @param date  the pre-filled date for the event
      */
     public EventDialog(Frame owner, String title, LocalDate date) {
         super(owner, title, true);
@@ -50,10 +56,18 @@ public class EventDialog extends JDialog {
         populateDate(date);
     }
 
+    /**
+     * Populates the date field with the specified date.
+     *
+     * @param date the date to populate
+     */
     private void populateDate(LocalDate date) {
         dateField.setText(date.toString());
     }
 
+    /**
+     * Initializes the user interface components.
+     */
     private void initializeUI() {
         setLayout(new BorderLayout());
 
@@ -106,6 +120,9 @@ public class EventDialog extends JDialog {
         setLocationRelativeTo(getOwner());
     }
 
+    /**
+     * Populates the fields with the event details for editing.
+     */
     private void populateFields() {
         if (event != null) {
             titleField.setText(event.getTitle());
@@ -116,41 +133,44 @@ public class EventDialog extends JDialog {
         }
     }
 
+    /**
+     * Handles the save action, validates the input, and creates or updates the
+     * event.
+     */
     private void onSave() {
         String title = titleField.getText();
-        String date_str = dateField.getText();
-        String time_str = timeField.getText();
+        String dateStr = dateField.getText();
+        String timeStr = timeField.getText();
         String location = locationField.getText();
         String description = descriptionArea.getText();
         LocalDate date = null;
         LocalTime time = null;
 
-
-        // check if everything is filled
-        if (title.isEmpty() || date_str.isEmpty() || time_str.isEmpty()) {
+        // Check if all required fields are filled
+        if (title.isEmpty() || dateStr.isEmpty() || timeStr.isEmpty()) {
             JOptionPane.showMessageDialog(EventDialog.this, "Please fill all fields", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // check if date is in the correct format
-        if (!date_str.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        // Validate date format
+        if (!dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
             JOptionPane.showMessageDialog(EventDialog.this, "Invalid date format. Use YYYY-MM-DD", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // check if time is in the correct format
-        if (!time_str.matches("\\d{2}:\\d{2}")) {
+        // Validate time format
+        if (!timeStr.matches("\\d{2}:\\d{2}")) {
             JOptionPane.showMessageDialog(EventDialog.this, "Invalid time format. Use HH:MM", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // check if date and time are valid
+        // Validate date and time
         try {
-            date = LocalDate.parse(dateField.getText());
-            time = LocalTime.parse(timeField.getText());
+            date = LocalDate.parse(dateStr);
+            time = LocalTime.parse(timeStr);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(EventDialog.this, "Invalid date and time", "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -158,20 +178,32 @@ public class EventDialog extends JDialog {
         }
 
         event = new Event(title, date, time, location, description);
-
         confirmed = true;
         dispose();
     }
 
+    /**
+     * Handles the cancel action, discards the input, and closes the dialog.
+     */
     private void onCancel() {
         confirmed = false;
         dispose();
     }
 
+    /**
+     * Returns whether the dialog was confirmed.
+     *
+     * @return true if the dialog was confirmed, false otherwise
+     */
     public boolean isConfirmed() {
         return confirmed;
     }
 
+    /**
+     * Returns the event created or edited by the dialog.
+     *
+     * @return the event created or edited
+     */
     public Event getEvent() {
         return event;
     }
