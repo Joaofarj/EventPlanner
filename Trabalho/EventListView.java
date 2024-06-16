@@ -7,16 +7,18 @@ import java.util.List;
 
 public class EventListView extends JPanel {
     private EventManager eventManager;
-    private LocalDate selectedDate;
     private JPanel eventListPanel;
+    private JPanel topPanel;
     private EventActionListener editListener;
     private EventActionListener deleteListener;
+    private LocalDate date;
 
     public EventListView(EventManager eventManager, EventActionListener editListener,
-            EventActionListener deleteListener) {
+            EventActionListener deleteListener, LocalDate date) {
         this.eventManager = eventManager;
         this.editListener = editListener;
         this.deleteListener = deleteListener;
+        this.date = date;
         initializeUI();
     }
 
@@ -24,12 +26,47 @@ public class EventListView extends JPanel {
         setLayout(new BorderLayout());
         eventListPanel = new JPanel();
         eventListPanel.setLayout(new BoxLayout(eventListPanel, BoxLayout.Y_AXIS));
+
+        // top panel with date and a button to add events
+        topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+
         add(new JScrollPane(eventListPanel), BorderLayout.CENTER);
+    }
+    
+    private void addEvent() {
+        EventDialog dialog = new EventDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Add Event", date);
+        dialog.setVisible(true);
+
+        if (dialog.isConfirmed()) {
+            Event newEvent = dialog.getEvent();
+            eventManager.addEvent(newEvent);
+            updateEvents(date);
+        }
     }
 
     public void updateEvents(LocalDate date) {
-        this.selectedDate = date;
+
+        this.date = date;
+
         eventListPanel.removeAll();
+        topPanel.removeAll();
+
+        JLabel dateLabel = new JLabel("Events on " + date);
+        topPanel.add(dateLabel, BorderLayout.WEST);
+
+        JButton addEventsButton = new JButton("Add Event");
+        addEventsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addEvent();
+            }
+        });
+        topPanel.add(addEventsButton, BorderLayout.EAST);
+
+        add(topPanel, BorderLayout.NORTH);
+
+
         List<Event> events = eventManager.getEventsByDate(date);
 
         for (Event event : events) {

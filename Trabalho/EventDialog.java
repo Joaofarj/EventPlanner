@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /* 
@@ -38,6 +37,21 @@ public class EventDialog extends JDialog {
         this.event = event;
         initializeUI();
         populateFields();
+    }
+
+    /**
+     * @param owner the owner of the dialog
+     * @param title the title of the dialog
+     * @param event the event to edit, or null to create a new event
+     */
+    public EventDialog(Frame owner, String title, LocalDate date) {
+        super(owner, title, true);
+        initializeUI();
+        populateDate(date);
+    }
+
+    private void populateDate(LocalDate date) {
+        dateField.setText(date.toString());
     }
 
     private void initializeUI() {

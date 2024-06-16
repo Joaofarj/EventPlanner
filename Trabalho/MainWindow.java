@@ -8,6 +8,7 @@ public class MainWindow extends JFrame {
     private EventManager eventManager;
     private CalendarView calendarView;
     private EventListView eventListView;
+    private LocalDate today;
 
     public MainWindow() {
         eventManager = new EventManager("events.dat");
@@ -20,12 +21,14 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        this.today = LocalDate.now();
+
         // Navigation pane with calendar view
         calendarView = new CalendarView(eventManager, this::onDateSelected);
         add(calendarView, BorderLayout.WEST);
 
         // Detailed view area with event list view
-        eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted);
+        eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted, today);
         add(new JScrollPane(eventListView), BorderLayout.CENTER);
 
         // Button panel
