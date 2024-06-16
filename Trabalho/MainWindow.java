@@ -9,9 +9,11 @@ public class MainWindow extends JFrame {
     private CalendarView calendarView;
     private EventListView eventListView;
     private LocalDate today;
+    private ReminderService reminderService;
 
     public MainWindow() {
         eventManager = new EventManager("events.dat");
+        reminderService = new ReminderService(eventManager);
         initializeUI();
     }
 
@@ -19,6 +21,7 @@ public class MainWindow extends JFrame {
         setTitle("Event Planner");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         setLayout(new BorderLayout());
 
         this.today = LocalDate.now();
@@ -58,6 +61,7 @@ public class MainWindow extends JFrame {
         if (dialog.isConfirmed()) {
             Event newEvent = dialog.getEvent();
             eventManager.addEvent(newEvent);
+            reminderService.addEvent(newEvent);
             refreshViews();
 
         }
@@ -70,6 +74,7 @@ public class MainWindow extends JFrame {
         if (dialog.isConfirmed()) {
             Event updatedEvent = dialog.getEvent();
             eventManager.editEvent(event, updatedEvent);
+            reminderService.addEvent(updatedEvent);
             refreshViews();
         }
     }

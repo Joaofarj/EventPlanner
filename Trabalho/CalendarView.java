@@ -23,6 +23,7 @@ public class CalendarView extends JPanel {
         this.dateSelectedListener = dateSelectedListener;
         this.selectedDate = LocalDate.now();
         this.currentMonth = YearMonth.now();
+        
         initializeUI();
         refresh();
     }
