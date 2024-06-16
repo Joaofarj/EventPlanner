@@ -1,15 +1,20 @@
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /* 
  * Event class that stores information about an event
  *  like title, date, time, location and description
  */
 public class Event implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     private String title;
-    private LocalDateTime dateTime;
+    private LocalDate date;
+    private LocalTime time;
     private String location;
     private String description;
+
 
     /**
      * @param title the title of the event
@@ -17,9 +22,10 @@ public class Event implements Serializable {
      * @param location the location of the event
      * @param description the description of the event
      */
-    public Event(String title, LocalDateTime dateTime, String location, String description) {
+    public Event(String title, LocalDate date, LocalTime time, String location, String description) {
         this.title = title;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.description = description;
     }
@@ -35,8 +41,9 @@ public class Event implements Serializable {
     /**
      * @return the date and time of the event
      **/
-    public LocalDateTime getDateTime() {
-        return dateTime;
+
+    public LocalDate getDate() {
+        return date;
     }
 
     /**
@@ -66,8 +73,8 @@ public class Event implements Serializable {
      * Set the date to the event
      * @param dateTime the date to the event
      */
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     /**
@@ -85,5 +92,25 @@ public class Event implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public LocalTime getTime() {
+        return time;
+    }
+    
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "title='" + title + '\'' +
+                ", date=" + date +
+                ", time=" + time +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+    
 }
 
