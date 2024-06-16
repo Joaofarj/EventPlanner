@@ -55,7 +55,7 @@ public class EventListView extends JPanel {
         JLabel dateLabel = new JLabel("Events on " + date);
         topPanel.add(dateLabel, BorderLayout.WEST);
 
-        JButton addEventsButton = new JButton("Add Event");
+        JButton addEventsButton = new JButton("+");
         addEventsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

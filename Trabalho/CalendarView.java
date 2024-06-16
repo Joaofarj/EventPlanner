@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Calendar;
 import java.util.List;
 
 public class CalendarView extends JPanel {
@@ -60,7 +61,7 @@ public class CalendarView extends JPanel {
         add(headerPanel, BorderLayout.NORTH);
 
         calendarPanel = new JPanel();
-        calendarPanel.setLayout(new GridLayout(0, 7));
+        calendarPanel.setLayout(new GridLayout(7, 7));
         add(calendarPanel, BorderLayout.CENTER);
     }
 
@@ -68,6 +69,12 @@ public class CalendarView extends JPanel {
         calendarPanel.removeAll();
 
         monthLabel.setText(currentMonth.getMonth().toString() + " " + currentMonth.getYear());
+        String[] daysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+
+        for (String day : daysOfWeek) {
+            calendarPanel.add(new JLabel(day, SwingConstants.CENTER));
+
+        }
 
         LocalDate firstOfMonth = currentMonth.atDay(1);
         int dayOfWeekValue = firstOfMonth.getDayOfWeek().getValue();
@@ -94,6 +101,11 @@ public class CalendarView extends JPanel {
             }
 
             calendarPanel.add(dayButton);
+        }
+        // Fills the calendar with empty panels after the end of the month
+
+        for (int i = 1; i < 42 - daysInMonth - dayOfWeekValue; i++) {
+            calendarPanel.add(new JPanel());
         }
 
         calendarPanel.revalidate();
