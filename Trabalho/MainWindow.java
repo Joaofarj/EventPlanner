@@ -3,11 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * MainWindow class represents the main window of the Event Planner application.
- * It provides functionalities to add, edit, delete events, and manage
- * reminders.
+ * It provides functionalities to add, edit, delete events, manage reminders,
+ * and search events by keywords.
  */
 public class MainWindow extends JFrame {
     private EventManager eventManager;
@@ -15,6 +16,8 @@ public class MainWindow extends JFrame {
     private EventListView eventListView;
     private LocalDate today;
     private ReminderService reminderService;
+    private JTextField searchField;
+    private JPanel searchResultsPanel;
 
     /**
      * Constructs a MainWindow object, initializes the EventManager and
@@ -45,6 +48,28 @@ public class MainWindow extends JFrame {
         // Detailed view area with event list view
         eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted, today);
         add(new JScrollPane(eventListView), BorderLayout.CENTER);
+
+        // Search panel
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new BorderLayout());
+
+        searchField = new JTextField();
+        JButton searchButton = new JButton("Search");
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSearch();
+            }
+        });
+
+        searchPanel.add(searchField, BorderLayout.CENTER);
+        searchPanel.add(searchButton, BorderLayout.EAST);
+        add(searchPanel, BorderLayout.NORTH);
+
+        // Search results panel
+        searchResultsPanel = new JPanel();
+        searchResultsPanel.setLayout(new BoxLayout(searchResultsPanel, BoxLayout.Y_AXIS));
+        add(new JScrollPane(searchResultsPanel), BorderLayout.EAST);
 
         // Button panel
         JPanel buttonPanel = new JPanel();
@@ -117,6 +142,30 @@ public class MainWindow extends JFrame {
             eventManager.deleteEvent(event);
             refreshViews();
         }
+    }
+
+    /**
+     * Searches for events based on the keyword entered in the search field,
+     * and displays the results in the search results panel.
+     */
+    private void onSearch() {
+        String keyword = searchField.getText().trim();
+        List<Event> searchResults = eventManager.searchEvents(keyword);
+        searchResultsPanel.removeAll();
+
+        for (Event event : searchResults) {
+            JPanel eventPanel = new JPanel();
+            eventPanel.setLayout(new BorderLayout());
+            eventPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+            JLabel eventLabel = new JLabel(event.getTitle() + " on " + event.getDate() + " at " + event.getTime());
+            eventPanel.add(eventLabel, BorderLayout.CENTER);
+
+            searchResultsPanel.add(eventPanel);
+        }
+
+        revalidate();
+        repaint();
     }
 
     /**

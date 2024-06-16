@@ -61,6 +61,7 @@ public class EventManager {
             e.printStackTrace();
         }
     }
+    
 
     // Method to list all events (for debugging purposes)
     public List<Event> getAllEvents() {
