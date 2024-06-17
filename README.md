@@ -48,14 +48,6 @@ Event Planner is a desktop application built using Java Swing that helps users o
 
 The tests conducted on the code were performed using the 'events.dat' file available in the 'Trabalho' folder. This file contains sample event data used to validate the functionality of the application. During the testing process, various operations such as adding, editing, and deleting events were executed to ensure the application's reliability and correctness. The results indicated that all features operated as expected, and no issues or errors were encountered. This successful testing demonstrates the robustness and stability of the code.
 
-# Event Planner Project
-
-## Prerequisites
-
-1. **Java Development Kit (JDK)**
-   - Ensure you have JDK version 11 or higher installed on your system.
-   - You can download the JDK from the [Oracle website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or use a package manager like `apt` for Linux, `brew` for macOS, or the official installer for Windows.
-
 
 ## Step-by-Step Build Instructions
 
