@@ -26,3 +26,18 @@ Event Planner is a desktop application built using Java Swing that helps users o
 - **Data Persistence**:
   - Event data is saved and loaded using file I/O.
   - Exception handling for potential input/output errors.
+ 
+
+## Project Requirements
+
+- **Java Development Kit (JDK)**
+  - Version: 11 or higher
+
+- **Integrated Development Environment (IDE)**
+  - IntelliJ IDEA, Eclipse, NetBeans, or any other Java-compatible IDE
+
+- **Necessary Libraries**
+  - Standard Java libraries from the JDK
+
+- **Operating System**
+  - Compatible with any operating system that supports Java (Windows, macOS, Linux)
