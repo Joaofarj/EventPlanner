@@ -46,7 +46,7 @@ public class MainWindow extends JFrame {
         add(calendarView, BorderLayout.WEST);
 
         // Detailed view area with event list view
-        eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted, today);
+        eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted, today,this);
         add(new JScrollPane(eventListView), BorderLayout.CENTER);
 
         // Search panel
@@ -104,6 +104,15 @@ public class MainWindow extends JFrame {
         EventDialog dialog = new EventDialog(this, "Add Event");
         dialog.setVisible(true);
 
+        if (dialog.isConfirmed()) {
+            Event newEvent = dialog.getEvent();
+            eventManager.addEvent(newEvent);
+            reminderService.addEvent(newEvent);
+            refreshViews();
+        }
+    }
+
+    public void onAddEvent(EventDialog dialog){
         if (dialog.isConfirmed()) {
             Event newEvent = dialog.getEvent();
             eventManager.addEvent(newEvent);
@@ -174,9 +183,9 @@ public class MainWindow extends JFrame {
      */
     private void refreshViews() {
         LocalDate selectedDate = calendarView.getSelectedDate();
-        calendarView.refresh();
         eventListView.updateEvents(selectedDate);
         eventManager.saveEvents();
+        calendarView.refresh();
     }
 
     /**

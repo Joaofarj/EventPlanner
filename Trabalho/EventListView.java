@@ -16,6 +16,7 @@ public class EventListView extends JPanel {
     private JPanel topPanel;
     private EventActionListener editListener;
     private EventActionListener deleteListener;
+    private MainWindow main;
     private LocalDate date;
 
     /**
@@ -27,11 +28,12 @@ public class EventListView extends JPanel {
      * @param date           the date for which events are displayed
      */
     public EventListView(EventManager eventManager, EventActionListener editListener,
-            EventActionListener deleteListener, LocalDate date) {
+            EventActionListener deleteListener, LocalDate date,MainWindow main) {
         this.eventManager = eventManager;
         this.editListener = editListener;
         this.deleteListener = deleteListener;
         this.date = date;
+        this.main = main;
         initializeUI();
     }
 
@@ -56,12 +58,7 @@ public class EventListView extends JPanel {
     private void addEvent() {
         EventDialog dialog = new EventDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Add Event", date);
         dialog.setVisible(true);
-
-        if (dialog.isConfirmed()) {
-            Event newEvent = dialog.getEvent();
-            eventManager.addEvent(newEvent);
-            updateEvents(date);
-        }
+        main.onAddEvent(dialog);
     }
 
     /**

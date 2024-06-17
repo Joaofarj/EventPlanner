@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
+/**
+ * The CalendarView class provides a GUI component for displaying a calendar.
+ * It allows navigation between months and highlights dates with events.
+ */
 public class CalendarView extends JPanel {
     private EventManager eventManager;
     private LocalDate selectedDate;
@@ -17,16 +21,25 @@ public class CalendarView extends JPanel {
     private List<Event> events;
     private DateSelectedListener dateSelectedListener;
 
+    /**
+     * Constructs a CalendarView instance.
+     *
+     * @param eventManager         the EventManager instance for retrieving events
+     * @param dateSelectedListener the listener for date selection events
+     */
     public CalendarView(EventManager eventManager, DateSelectedListener dateSelectedListener) {
         this.eventManager = eventManager;
         this.dateSelectedListener = dateSelectedListener;
         this.selectedDate = LocalDate.now();
         this.currentMonth = YearMonth.now();
-        
+
         initializeUI();
         refresh();
     }
 
+    /**
+     * Initializes the user interface components.
+     */
     private void initializeUI() {
         setLayout(new BorderLayout());
 
@@ -65,6 +78,9 @@ public class CalendarView extends JPanel {
         add(calendarPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Refreshes the calendar display to reflect the current month and events.
+     */
     public void refresh() {
         calendarPanel.removeAll();
 
@@ -73,7 +89,6 @@ public class CalendarView extends JPanel {
 
         for (String day : daysOfWeek) {
             calendarPanel.add(new JLabel(day, SwingConstants.CENTER));
-
         }
 
         LocalDate firstOfMonth = currentMonth.atDay(1);
@@ -83,6 +98,8 @@ public class CalendarView extends JPanel {
         for (int i = 1; i < dayOfWeekValue; i++) {
             calendarPanel.add(new JLabel(""));
         }
+
+        Color aquaColor = new Color(127, 255, 212);
 
         for (int day = 1; day <= daysInMonth; day++) {
             LocalDate date = currentMonth.atDay(day);
@@ -96,13 +113,19 @@ public class CalendarView extends JPanel {
             });
 
             events = eventManager.getEventsByDate(date);
-            if (!events.isEmpty()) {
+
+            if (date.equals(LocalDate.now())) {
+                if (!events.isEmpty()) {
+                    dayButton.setBackground(aquaColor); // Highlight dates with events
+                } else {
+                    dayButton.setBackground(Color.LIGHT_GRAY); // Highlight current day with no events
+                }
+            } else if (!events.isEmpty()) {
                 dayButton.setBackground(Color.CYAN); // Highlight dates with events
             }
 
             calendarPanel.add(dayButton);
         }
-        // Fills the calendar with empty panels after the end of the month
 
         for (int i = 1; i < 42 - daysInMonth - dayOfWeekValue; i++) {
             calendarPanel.add(new JPanel());
@@ -112,11 +135,25 @@ public class CalendarView extends JPanel {
         calendarPanel.repaint();
     }
 
+    /**
+     * Returns the currently selected date.
+     *
+     * @return the selected date
+     */
     public LocalDate getSelectedDate() {
         return selectedDate;
     }
+}
 
-    public interface DateSelectedListener {
-        void dateSelected(LocalDate date);
-    }
+
+/**
+ * Listener interface for date selection events.
+ */
+interface DateSelectedListener {
+    /**
+     * Invoked when a date is selected.
+     *
+     * @param date the selected date
+     */
+    void dateSelected(LocalDate date);
 }
