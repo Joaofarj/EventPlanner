@@ -43,3 +43,7 @@ Event Planner is a desktop application built using Java Swing that helps users o
   - Event data is saved and loaded using file I/O.
   - Exception handling for potential input/output errors.
 
+
+## Tests
+
+The tests conducted on the code were performed using the 'events.dat' file available in the 'Trabalho' folder. This file contains sample event data used to validate the functionality of the application. During the testing process, various operations such as adding, editing, and deleting events were executed to ensure the application's reliability and correctness. The results indicated that all features operated as expected, and no issues or errors were encountered. This successful testing demonstrates the robustness and stability of the code.
