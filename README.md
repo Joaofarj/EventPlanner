@@ -122,8 +122,3 @@ Felipe Destaole / 13686768
      ```
    - Verify that the application correctly reads from and writes to this file.
    - Tests confirmed that the application functions as intended, with no issues encountered.
-
-   - Testing for the application was performed using the events.dat file
-   - Place the events.dat file in the appropriate directory as required by the code
-   - Run the application and verify that it correctly reads from and writes to this file
-   - Tests confirmed that the application functions as intended, with no issues encountered
