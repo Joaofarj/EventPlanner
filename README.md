@@ -2,7 +2,7 @@ João Pedro Farjoun Silva / 13731319
 
 Felipe Destaole / 13686768
 
-## Event Planner
+# Event Planner
 
 **Event Planner** is a Java Swing desktop application designed to help users organize and manage events such as meetings, birthdays, and appointments. It features calendar views and event reminders.
 
@@ -45,9 +45,8 @@ Felipe Destaole / 13686768
 
 - Testing was conducted using the 'events.dat' file available in the project folder. This file contains sample event data used to validate the application's functionality. Various operations such as adding, editing, and deleting events were executed during testing to ensure reliability and correctness. The results confirmed that all features operated as expected without encountering issues or errors.
 
-# Event Planner Project
 
-## Step-by-Step Build Instructions
+### Step-by-Step Build Instructions
 
 1. **Set Up the Development Environment**
    - **Download and Install JDK:**
