@@ -145,7 +145,6 @@ public class CalendarView extends JPanel {
     }
 }
 
-
 /**
  * Listener interface for date selection events.
  */
