@@ -31,8 +31,12 @@ Felipe Destaole / 13686768
 - Search functionality to find events using keywords
 
 **Calendar Display:**
-- Monthly calendar view where users can click on a date to see scheduled events for that day
-- Highlights dates with scheduled events
+- Users can click on a date to see scheduled events for that day.
+- Date Highlights:
+  - Cyan: Dates with scheduled events (excluding the current date).
+  - Grey: The current date if there isn't an event.
+  - Aquamarine: The current date if there is an event.
+
 
 **Reminders and Notifications:**
 - Reminders alert users about upcoming events
