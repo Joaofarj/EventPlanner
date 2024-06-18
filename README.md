@@ -11,7 +11,7 @@ Felipe Destaole / 13686768
 - **Java Development Kit (JDK)**
   - Version: 11 or higher
 
-- **Integrated Development Environment (IDE)**
+- **Integrated Development Environment (IDE) (Optional)**
   - IntelliJ IDEA, Eclipse, NetBeans, or any other Java-compatible IDE
 
 - **Required Libraries**
