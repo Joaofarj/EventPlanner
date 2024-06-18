@@ -21,8 +21,7 @@ public class MainWindow extends JFrame {
 
     /**
      * Constructs a MainWindow object, initializes the EventManager and
-     * ReminderService,
-     * and sets up the user interface.
+     * ReminderService, and sets up the user interface.
      */
     public MainWindow() {
         eventManager = new EventManager("events.dat");
@@ -46,7 +45,7 @@ public class MainWindow extends JFrame {
         add(calendarView, BorderLayout.WEST);
 
         // Detailed view area with event list view
-        eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted, today,this);
+        eventListView = new EventListView(eventManager, this::onEventEdited, this::onEventDeleted, today, this);
         add(new JScrollPane(eventListView), BorderLayout.CENTER);
 
         // Search panel
@@ -112,7 +111,12 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public void onAddEvent(EventDialog dialog){
+    /**
+     * Handles adding an event when called from another context.
+     *
+     * @param dialog the event dialog containing the event details
+     */
+    public void onAddEvent(EventDialog dialog) {
         if (dialog.isConfirmed()) {
             Event newEvent = dialog.getEvent();
             eventManager.addEvent(newEvent);
